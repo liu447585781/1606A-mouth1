@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+
+    </div>
+    <script>
+        function preLoadImg(src) {
+            return new Promise((resolve, reject) => {
+                let image = new Image();
+                image.onload = function() {
+                    resolve(image)
+                }
+                image.onerror = function() {
+                    reject('图片找不到')
+                }
+                image.src = src;
+            })
+
+        }
+        const url = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545829427125&di=7f31880e8eb71d1e58e00e3370c914b0&imgtype=0&src=http%3A%2F%2Fimg0.pconline.com.cn%2Fpconline%2F1609%2F01%2F8319640_33_thumb.jpg',
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545829427125&di=7f31880e8eb71d1e58e00e3370c914b0&imgtype=0&src=http%3A%2F%2Fimg0.pconline.com.cn%2Fpconline%2F1609%2F01%2F8319640_33_thumb.jpg',
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545829427125&di=7f31880e8eb71d1e58e00e3370c914b0&imgtype=0&src=http%3A%2F%2Fimg0.pconline.com.cn%2Fpconline%2F1609%2F01%2F8319640_33_thumb.jpg',
+            'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545829427125&di=7f31880e8eb71d1e58e00e3370c914b0&imgtype=0&src=http%3A%2F%2Fimg0.pconline.com.cn%2Fpconline%2F1609%2F01%2F8319640_33_thumb.jpg'
+        ];
+
+        render(url)
+
+        function render(data) {
+            Promise.all(data.map(item => {
+                return preLoadImg(item)
+            })).then(val => {
+                console.log(val)
+                val.forEach(item => {
+                    document.body.append(item)
+                })
+            }).catch(function(data) {
+                console.log(data)
+            })
+        }
+    </script>
+</body>
+
+</html>
