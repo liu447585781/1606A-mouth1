@@ -21,7 +21,7 @@ export default {
   },
   methods:{
     btn(){
-      this.$router.push({path:'/login'})
+      this.$router.push({path:'/number/login'})
     }
   }
 }

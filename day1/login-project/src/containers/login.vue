@@ -1,7 +1,7 @@
 <template>
   <div class="login">
       <div class="header">
-          <a href="javascript:history.back(-1)">&lt;</a>
+          <a href="javascript:history.back()">&lt;</a>
           <span>手机号登录</span>
           <a href="javascript:;"></a>
       </div>
@@ -35,6 +35,11 @@ export default {
 
 <style scoped>
 .login{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: #fff;
   width: 100%;
   height: 100%;
 }
