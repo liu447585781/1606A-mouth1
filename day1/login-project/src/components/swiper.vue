@@ -37,7 +37,11 @@ export default {
 
 <style scoped >
     .swiper{
-        width: 95%;
+        width: 96%;
+        border-radius: 5px;
+    }
+    img{
+        border-radius: 5px;
     }
 </style>
 

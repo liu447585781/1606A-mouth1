@@ -31,6 +31,7 @@
             })
 
         }
+        let url = null;
         url = ['https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546478130&di=9113c8bf9cbf9f38050bddad78c409d1&imgtype=jpg&er=1&src=http%3A%2F%2Fwww.zjchunyin.com%2Fpublic%2Fuploads%2Fimages%2F2017%2F07%2F20170714172401143.jpg',
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545883413219&di=9bacefd93afc881b22c7063423c11c89&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F010acb59719f04a8012193a3c8e491.png%401280w_1l_2o_100sh.png',
             'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545883413219&di=3eaa4be64dd1f2f819c06dba3860fe64&imgtype=0&src=http%3A%2F%2Fimg14.360buyimg.com%2Fn0%2Fjfs%2Ft157%2F175%2F1238265456%2F19748%2F35e76423%2F53a81945N70e0a9d9.jpg',
@@ -39,17 +40,11 @@
 
         render(url)
 
-        function render(data) {
-            Promise.all(data.map(item => {
-                return preLoadImg(item)
-            })).then(val => {
-                console.log(val)
-                val.forEach(item => {
-                    document.body.append(item)
-                })
-            }).catch(function(data) {
-                console.log(data)
-            })
+        async function render(data) {
+            for (let i = 0; i < data.length; i++) {
+                let img = await preLoadImg(data[i])
+                document.body.appendChild(img)
+            }
         }
     </script>
 </body>
