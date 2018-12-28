@@ -8,7 +8,19 @@ const mutations = {
     }
 }
 
+const actions = {
+    btns({ commit }, action) {
+        // console.log('context....', context, action);
+        setTimeout(() => {
+            commit('btn', action)
+        }, 1000)
+
+    }
+}
+
 export default {
+    namespaced: true,
     state,
-    mutations
+    mutations,
+    actions
 }

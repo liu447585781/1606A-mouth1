@@ -1,13 +1,20 @@
 <template>
   <div class="hello">
-    <button @click="btn('+')">+</button>
-    <p>{{this.$store.state.app.num}}</p>
-    <button @click="btn('-')">-</button>
+    <button @click="btn({payload:'+'})">+</button>
+    <p>{{num}}</p>
+    <button @click="btn({payload:'-'})">-</button>
   </div>
 </template>
 
 <script>
+import {mapState, mapGetters, mapMutations, mapActions} from 'vuex';
+console.log(mapState)
 export default {
+  computed:{
+    ...mapState({
+      num:state=>state.app.num
+    })
+  },
   name: 'HelloWorld',
   mounted(){
     console.log(this.$store)
@@ -18,8 +25,16 @@ export default {
     }
   },
   methods:{
+    ...mapMutations({
+      btn:'app/btn'
+    }),
+    ...mapActions({
+      btns:'app/btns'
+    }),
     btn(type){
-      this.$store.commit('btn',{payload:type})
+      // this.$store.commit('app/btn',{payload:type})
+      // this.$store.dispatch('app/btns',{payload:type})
+      this.btns({payload:type})
     }
   }
 }
