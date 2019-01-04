@@ -1,15 +1,14 @@
-import { cityList, constList } from '../../api/index'
+import { cityList, costList } from '../../api/index'
 
 const state = {
     cityList: [],
     costList: [],
     city: ['请选择签发地'],
-    cost: []
+    cost: ['请选择补换地']
 }
 
 const mutations = {
     updateState(state, action) {
-        console.log('mutations...', state.action)
         state = Object.assign(state, action);
     }
 }
@@ -23,16 +22,18 @@ const actions = {
             })
         })
         commit('updateState', { cityList: res.data })
-        console.log('res...', res);
     },
-    async getCostList({}) {
-
+    async getCostList({ commit, state }, action) {
+        let proIndex = state.cityList.findIndex(item => item.name == state.city[0]),
+            cityIndex = state.cityList[proIndex].list.findIndex(item => item.name == state.city[1]);
+        let res = await costList(1, state.cityList[proIndex].id, state.cityList[proIndex].list[cityIndex].id);
+        commit('updateState', { costList: res.data })
     }
 }
 
 export default {
     namespaced: true,
     state,
-    mutations,
-    actions
+    actions,
+    mutations
 }

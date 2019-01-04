@@ -32,6 +32,6 @@ export let cityList = () => {
     return sendRequest('/api/ExchangeJiaZhao/cityList')
 }
 
-export let constList = (...parmas) => {
-    return sendRequest(`/api/ExchangeJiaZhao/getCostList?order_type=${params[0]}&province_id=${params[1]}&city_id=${params[2]}`)
+export let costList = (...parmas) => {
+    return sendRequest(`/api/ExchangeJiaZhao/getCostList?order_type=${parmas[0]}&province_id=${parmas[1]}&city_id=${parmas[2]}`)
 }
