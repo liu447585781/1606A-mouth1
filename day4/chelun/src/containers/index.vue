@@ -20,7 +20,7 @@
     </div>
     </div>
     <div class="footer">
-      实付：<span>￥399</span> <b>立刻支付</b>
+      实付：<span>￥399</span> <b @click="click">立刻支付</b>
     </div>
     <div class="kf">
       <img src="https://h5.chelun.com/2017/update-licence2-pay/img/cc-icon.png" alt="">
@@ -33,13 +33,23 @@
 <script>
 import Upload from '../components/upload'
 import CityPicker from '../components/cityPicker'
-
+import {isVip,goPay} from '../api/index';
 
 export default {
   name: 'Index',
   components:{
     Upload,
     CityPicker
+  },
+  methods:{
+    click(){
+      goPay();
+    }
+  },
+  mounted(){
+    isVip().then(res=>{
+      console.log('isVip...',res)
+    })
   }
 }
 </script>
