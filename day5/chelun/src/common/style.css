@@ -1,0 +1,153 @@
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wrap {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.wraper {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  width: 100%;
+  height: 111px;
+  background: #577efe;
+  line-height: 111px;
+}
+
+.header .head {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header .head img {
+  width: 120px;
+  height: 39px;
+}
+
+.header .head ul {
+  padding: 0 30px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header .head ul li {
+  padding: 0 10px 0;
+  height: 40px;
+  line-height: 40px;
+  color: #333;
+  font-size: 20px;
+}
+
+.header .head ul li:last-child {
+  font-size: 15px;
+}
+
+.header .head .head.icon {
+  display: none;
+}
+
+.banner {
+  width: 100%;
+}
+
+.banner img {
+  width: 100%;
+  height: 450px;
+}
+
+.tap {
+  width: 100%;
+  height: 70px;
+  border-bottom: 1px solid #ccc;
+  line-height: 70px;
+}
+
+.tap .taplist ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
+.tap .taplist ul li {
+  margin-right: 140px;
+}
+
+.tap .taplist ul li:nth-child(2) {
+  border-bottom: 3px solid skyblue;
+}
+
+.section {
+  width: 100%;
+}
+
+.section .con .one h3 {
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+  box-sizing: border-box;
+}
+
+.section .con .one h3 i {
+  display: inline-block;
+  width: 6px;
+  height: 20px;
+  background: skyblue;
+  margin-right: 5px;
+}
+
+.section .con .one h3 em {
+  margin-left: 5px;
+  font-style: normal;
+}
+
+@media screen and (max-width: 1000px) {
+  .head {
+    background: #fff;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .head ul {
+    display: none;
+  }
+  .head .icon {
+    display: block;
+    width: 50px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .head .icon img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 1001px) {
+  .head ul {
+    display: none;
+  }
+  .head .icon {
+    display: none;
+  }
+}
