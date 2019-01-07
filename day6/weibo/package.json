@@ -1,0 +1,23 @@
+{
+  "name": "weibo",
+  "version": "1.0.0",
+  "description": "My glorious Nuxt.js project",
+  "author": "liu447585781",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "cross-env": "^5.2.0",
+    "element-ui": "^2.4.6",
+    "nuxt": "^2.0.0",
+    "vue": "^2.5.21",
+    "vue-server-renderer": "^2.5.21"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
