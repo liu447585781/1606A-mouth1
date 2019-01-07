@@ -22,24 +22,23 @@
     <div class="footer">
       实付：<span>￥399</span> <b @click="click">立刻支付</b>
     </div>
-    <div class="kf">
-      <img src="https://h5.chelun.com/2017/update-licence2-pay/img/cc-icon.png" alt="">
-    </div>
     <!-- <van-picker :columns="columns" @change="onChange" /> -->
-    
+    <Kf/>
   </div>
 </template>
 
 <script>
 import Upload from '../components/upload'
 import CityPicker from '../components/cityPicker'
+import Kf from '../components/kf'
 import {isVip,goPay} from '../api/index';
 
 export default {
   name: 'Index',
   components:{
     Upload,
-    CityPicker
+    CityPicker,
+    Kf
   },
   methods:{
     click(){
@@ -225,16 +224,5 @@ export default {
     color: #fff;
     text-align: center;
     font-weight: normal;
-  }
-  .kf{
-    position: fixed;
-    right: 20px;
-    bottom: 60px;
-    width: 60px;
-    height: 60px;
-  }
-  .kf img{
-    width: 100%;
-    height: 100%;
   }
 </style>

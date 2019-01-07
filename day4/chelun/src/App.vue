@@ -5,11 +5,21 @@
 </template>
 
 <script>
+import JSBridge from './utils/JSBridge.js';
 export default {
   name: 'app',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
+    }
+  },
+  methods: {
+    login(){
+      JSBridge.invoke('app', 'login', {
+        loginCallBackName: (res)=>{
+          console.log('res...', res);
+        }
+      });
     }
   }
 }
