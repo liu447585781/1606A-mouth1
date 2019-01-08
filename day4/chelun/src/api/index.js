@@ -17,6 +17,7 @@ function sendRequest(url, method = 'GET', data = {}) {
         .then(body => body)
 }
 
+// 图片上传
 export let uploadImg = (type) => {
     return new Promise((resolve, reject) => {
         JSBridge.invoke('device', 'chooseImage', {
@@ -28,24 +29,29 @@ export let uploadImg = (type) => {
     })
 }
 
+// 获取签发城市
 export let cityList = () => {
     return sendRequest('/api/ExchangeJiaZhao/cityList')
 }
 
+// 获取可补换的城市
 export let costList = (...parmas) => {
     return sendRequest(`/api/ExchangeJiaZhao/getCostList?order_type=${parmas[0]}&province_id=${parmas[1]}&city_id=${parmas[2]}`)
 }
 
+// 唤醒登陆
 export let goLogin = () => {
     JSBridge.invoke('app', 'login', {
         loginCallBackName: () => window.reload()
     })
 }
 
+// 获取用户是否是会员
 export let isVip = () => {
     return sendRequest('https://vip.chelun.com/api/status')
 }
 
+// 唤起支付
 export let goPay = () => {
     JSBridge.invoke('app', 'pay', {
         price: 398.00,
@@ -53,4 +59,14 @@ export let goPay = () => {
         channels: ["weixin", "alipay", "baidu"],
         callbackUrl: 'https://h5.chelun.com/2017/update-licence2/order.html'
     });
+}
+
+// 唤醒分享
+export let goShare = () => {
+    JSBridge.invoke('ui', 'shareMessage');
+}
+
+// 上传base64图片
+export let uploadBase64 = (base64) => {
+    return sendRequest('http://123.206.55.50:11000/upload_base64', 'POST', { base64 })
 }

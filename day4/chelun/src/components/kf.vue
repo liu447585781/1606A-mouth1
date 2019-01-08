@@ -68,10 +68,13 @@ export default {
             position: absolute;
             bottom: 5px;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             outline: none;
+            color: #3aafc0;
             &:first-child{
-                bottom: 115px;
+                bottom: 112px;
+                border: none;
+                border-radius: 10px 10px 0 0;
             }
         }
         .tel{
@@ -83,9 +86,10 @@ export default {
             position: absolute;
             bottom:60px;
             display: inline-block;
-            background: #fff;
-            border-radius: 5px;
+            background: rgb(221, 221, 221);
+            border-radius:  0 0 10px 10px;
             a{
+                color: #3aafc0;
                 width: 100%;
                 height: 100%;
                 display: inline-block;

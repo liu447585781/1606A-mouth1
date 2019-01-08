@@ -4,7 +4,8 @@ const state = {
     cityList: [],
     costList: [],
     city: ['请选择签发地'],
-    cost: ['请选择补换地']
+    cost: ['请选择补换地'],
+    lxss: ['请选择联系省市']
 }
 
 const mutations = {

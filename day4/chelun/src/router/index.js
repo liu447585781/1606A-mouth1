@@ -9,7 +9,7 @@ import Txsh from '../containers/txsh'
 const router = new VueRouter({
     routes: [{
         path: '*',
-        redirect: '/index'
+        redirect: '/txsh'
     }, {
         path: '/index',
         component: Index
@@ -18,5 +18,6 @@ const router = new VueRouter({
         component: Txsh
     }]
 })
+
 
 export default router;
