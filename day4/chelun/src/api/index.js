@@ -2,7 +2,10 @@ import JSBridge from '../utils/JSBridge.js'
 
 function sendRequest(url, method = 'GET', data = {}) {
     let params = {
-        method
+        method,
+        headers: {
+            'content-type': 'application/json'
+        }
     };
     if (method == 'POST') {
         params.body = JSON.stringify(data)
@@ -69,4 +72,8 @@ export let goShare = () => {
 // 上传base64图片
 export let uploadBase64 = (base64) => {
     return sendRequest('http://123.206.55.50:11000/upload_base64', 'POST', { base64 })
+}
+
+export let imgTobase64 = (url) => {
+    return sendRequest('http://123.206.55.50:11000/tobase64', 'POST', { url })
 }
