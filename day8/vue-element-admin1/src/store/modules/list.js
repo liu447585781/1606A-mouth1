@@ -1,4 +1,4 @@
-import { getUserList } from '@/api/user'
+import { getUserList, updateUserInfo } from '@/api/user'
 
 const state = {
     list: []
@@ -14,12 +14,24 @@ const actions = {
     getUserList({ commit }, query) {
         return new Promise((resolve, reject) => {
             getUserList(query).then(res => {
-                console.log(res)
                 if (res.data.code == 1) {
                     commit('updateList', res.data.data.list);
                     resolve();
                 } else {
                     reject(res.data.msg);
+                }
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    updateUserInfo({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            updateUserInfo(data).then(res => {
+                if (res.data.code == 1) {
+                    resolve(res.data.msg)
+                } else {
+                    reject(res.data.msg)
                 }
             }).catch(err => {
                 reject(err)
