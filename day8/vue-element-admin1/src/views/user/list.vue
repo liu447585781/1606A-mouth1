@@ -18,11 +18,32 @@
       </el-table-column>
       <el-table-column prop="address" label="地址">
       </el-table-column>
+      <el-table-column label="角色" width="160">
+        <template slot-scope="scope">
+          <el-tag
+            :key="tag"
+            style="margin-left:3px;"
+            v-for="tag in scope.row.rolers">
+            {{tag}}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column label="权限" width="150">
+        <template slot-scope="scope">
+          <el-tag
+            :key="tag"
+            style="margin-left:3px;"
+            v-for="tag in scope.row.access">
+            {{tag}}
+          </el-tag>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
             编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button size="mini" style="margin:5px 0" @click="handleRoler(scope.$index, scope.row)">修改角色</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,6 +70,10 @@
     <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
       <el-input v-model="currentUser.email"></el-input>
     </el-form-item>
+    <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
+      <el-input v-model="currentUser.address"></el-input>
+    </el-form-item>
+    
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消 修 改</el-button>
@@ -102,6 +127,7 @@ import {mapState,mapActions} from 'vuex'
           profile: [{trigger:'blur', required: true, validator: profileValidator}],
           phone: [{trigger:'blur', required: true,  validator: phoneValidator}],
           email: [{trigger:'blur', required: true,  validator: emailValidator}],
+          address:[{trigger:'blur', required: true, message: '地址必填' }]
         }
       }
     },
@@ -116,15 +142,20 @@ import {mapState,mapActions} from 'vuex'
       methods: {
       ...mapActions({
         getUserList:'list/getUserList',
-        updateUserInfo:'list/updateUserInfo'
+        updateUserInfo:'list/updateUserInfo',
+        deleteUserInfo:'list/deleteUserInfo'
       }),
-      handleDelete() {
+      handleDelete(ind,val) {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning',
           center: true
         }).then(() => {
+            let {id}=val;
+          this.deleteUserInfo({uid:id}).then(res=>{
+              this.getUserList({page:this.current})
+            })
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -144,11 +175,14 @@ import {mapState,mapActions} from 'vuex'
         this.current=page;
         this.getUserList({page})
       },
+      handleRoler(ind,row){
+        console.log(ind,row)
+      },
       sure(){
         this.$refs.form.validate(valid=>{
           if(valid){
-            let {id,username,profile,email,phone}=this.currentUser;
-            this.updateUserInfo({id,username,profile,email,phone}).then(res=>{
+            let {id,username,profile,email,phone,address}=this.currentUser;
+            this.updateUserInfo({id,username,profile,email,phone,address}).then(res=>{
               this.$message({
                 message:res,
                 center:true,

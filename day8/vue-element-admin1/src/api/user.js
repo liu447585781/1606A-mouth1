@@ -15,3 +15,11 @@ export function updateUserInfo(data) {
         data
     })
 }
+
+export function deleteUserInfo(data) {
+    return request({
+        url: '/users/action',
+        method: 'delete',
+        data
+    })
+}
