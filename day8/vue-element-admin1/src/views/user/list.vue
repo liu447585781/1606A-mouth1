@@ -3,6 +3,11 @@
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="id" label="ID" width="50">
       </el-table-column>
+      <el-table-column label="创建时间" width="80">
+      <template slot-scope="scope">
+          <span>{{scope.row.create_time | formatDate}}</span>
+      </template>
+    </el-table-column>
       <el-table-column label="头像" width="100">
         <template slot-scope="scope">
              <img :src="scope.row.avatar" alt="" style="width: 100%">
@@ -47,9 +52,9 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="修改内容" :visible.sync="dialogFormVisible">
+    <el-dialog :title="type=='edit'?'修改内容':'修改角色'" :visible.sync="dialogFormVisible">
   <el-form :model="currentUser" :rules="rules" ref="form">
-    <el-form-item label="头像" :label-width="formLabelWidth">
+    <el-form-item label="头像" v-if="type=='edit'" :label-width="formLabelWidth">
           <el-upload
             action="123"
             class="avatar-uploader"
@@ -58,22 +63,41 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-    <el-form-item label="姓名" :label-width="formLabelWidth" prop="username">
+    <el-form-item label="姓名" v-if="type=='edit'"  :label-width="formLabelWidth" prop="username">
       <el-input v-model="currentUser.username"></el-input>
     </el-form-item>
-    <el-form-item label="简介" :label-width="formLabelWidth" prop="profile">
+    <el-form-item label="简介" v-if="type=='edit'"  :label-width="formLabelWidth" prop="profile">
       <el-input v-model="currentUser.profile"></el-input>
     </el-form-item>
-    <el-form-item label="手机号" :label-width="formLabelWidth" prop="phone">
+    <el-form-item label="手机号" v-if="type=='edit'"  :label-width="formLabelWidth" prop="phone">
       <el-input v-model="currentUser.phone"></el-input>
     </el-form-item>
-    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
+    <el-form-item label="邮箱" v-if="type=='edit'"  :label-width="formLabelWidth" prop="email">
       <el-input v-model="currentUser.email"></el-input>
     </el-form-item>
-    <el-form-item label="地址" :label-width="formLabelWidth" prop="address">
+    <el-form-item label="地址" v-if="type=='edit'"  :label-width="formLabelWidth" prop="address">
       <el-input v-model="currentUser.address"></el-input>
     </el-form-item>
-    
+    <el-form-item v-if="type=='roler'" label="我的角色">
+           <el-tag
+            :key="tag"
+            closable
+            @close="deleteRoler(tag)"
+            style="margin-left:3px;"
+            v-for="tag in myRolers">
+            {{tag}}
+          </el-tag>
+        </el-form-item>
+        <el-form-item v-if="type=='roler'" label="全部角色">
+           <el-tag
+            :key="tag"
+            style="margin-left:3px;"
+            v-for="tag in rolers">
+            <span @click="addRoler(tag)">
+              {{tag}}
+            </span>
+          </el-tag>
+        </el-form-item>
   </el-form>
   <div slot="footer" class="dialog-footer">
     <el-button @click="dialogFormVisible = false">取 消 修 改</el-button>
@@ -128,7 +152,10 @@ import {mapState,mapActions} from 'vuex'
           phone: [{trigger:'blur', required: true,  validator: phoneValidator}],
           email: [{trigger:'blur', required: true,  validator: emailValidator}],
           address:[{trigger:'blur', required: true, message: '地址必填' }]
-        }
+        },
+        type: '',
+        myRolers:[],
+        rolers: ['boss', 'developer', 'producter', 'operator', 'designer'],
       }
     },
     computed:{
@@ -143,7 +170,8 @@ import {mapState,mapActions} from 'vuex'
       ...mapActions({
         getUserList:'list/getUserList',
         updateUserInfo:'list/updateUserInfo',
-        deleteUserInfo:'list/deleteUserInfo'
+        updateUserInfo:'list/updateUserInfo',
+        modifyRoler:'list/modifyRoler'
       }),
       handleDelete(ind,val) {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
@@ -168,6 +196,7 @@ import {mapState,mapActions} from 'vuex'
         });
       },
       handleEdit(index, row) {
+        this.type='edit';
         this.currentUser={...row};
         this.dialogFormVisible=true;
       },
@@ -176,29 +205,62 @@ import {mapState,mapActions} from 'vuex'
         this.getUserList({page})
       },
       handleRoler(ind,row){
-        console.log(ind,row)
+        this.type='roler';
+        this.currentUser={...row};
+        this.myRolers = [...row.rolers];
+        this.dialogFormVisible=true;
+      },
+      deleteRoler(roler){
+        let index  = this.myRolers.findIndex(item=>item==roler);
+        this.myRolers.splice(index, 1);
+      },
+      addRoler(roler){
+        this.myRolers.push(roler);
+        this.myRolers = [...new Set(this.myRolers)];
       },
       sure(){
-        this.$refs.form.validate(valid=>{
+        if(this.type=='edit'){
+          this.$refs.form.validate(valid=>{
           if(valid){
-            let {id,username,profile,email,phone,address}=this.currentUser;
-            this.updateUserInfo({id,username,profile,email,phone,address}).then(res=>{
-              this.$message({
-                message:res,
-                center:true,
-                type:'success'
-              });
-              this.getUserList({page:this.current})
-            }).catch(err=>{
-              this.$message({
-                message:err,
-                center:true,
-                type:'error'
-              });
-            })
-          this.dialogFormVisible=false;
-          }
-        })
+              let {id,username,profile,email,phone,address}=this.currentUser;
+              this.updateUserInfo({id,username,profile,email,phone,address}).then(res=>{
+                this.$message({
+                  message:res,
+                  center:true,
+                  type:'success'
+                });
+                this.getUserList({page:this.current})
+              }).catch(err=>{
+                this.$message({
+                  message:err,
+                  center:true,
+                  type:'error'
+                });
+              })
+            this.dialogFormVisible=false;
+            }
+          })
+        }else if(this.type=='roler'){
+          let {id}=this.currentUser;
+          let rolersId=this.myRolers.map(item=>{
+            return this.rolers.findIndex(value=>value==item)+1
+          })
+          this.modifyRoler({uid:id,rolersId}).then(res=>{
+                this.$message({
+                  message:res,
+                  center:true,
+                  type:'success'
+                });
+                this.getUserList({page:this.current})
+              }).catch(err=>{
+                this.$message({
+                  message:err,
+                  center:true,
+                  type:'error'
+                });
+              })
+            this.dialogFormVisible=false;
+        }
       }
     }
   }

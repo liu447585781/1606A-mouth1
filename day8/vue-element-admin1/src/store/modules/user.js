@@ -49,10 +49,10 @@ const user = {
         LoginByUsername({ commit }, userInfo) {
             const username = userInfo.username.trim()
             return new Promise((resolve, reject) => {
-                loginByUsername(username, userInfo.password).then(response => {
-                    const data = response.data
+                loginByUsername(username, md5(userInfo.password + 'lhc')).then(response => {
+                    const data = response.data.data
                     commit('SET_TOKEN', data.token)
-                    setToken(response.data.token)
+                    setToken(data.token)
                     resolve()
                 }).catch(error => {
                     reject(error)
@@ -81,22 +81,15 @@ const user = {
         GetUserInfo({ commit, state }) {
             return new Promise((resolve, reject) => {
                 getUserInfo(state.token).then(response => {
-                    // 由于mockjs 不支持自定义状态码只能这样hack
-                    if (!response.data) {
-                        reject('Verification failed, please login again.')
-                    }
-                    const data = response.data
-
-                    if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-                        commit('SET_ROLES', data.roles)
+                    if (response.data.code == 1) {
+                        commit('SET_ROLES', response.data.data.access)
+                        commit('SET_NAME', response.data.data.username)
+                        commit('SET_AVATAR', response.data.data.avatar)
+                        commit('SET_INTRODUCTION', response.data.data.profile)
+                        resolve({ data: { roles: response.data.data.access } })
                     } else {
-                        reject('getInfo: roles must be a non-null array!')
+                        reject(resizeBy.data.msg)
                     }
-
-                    commit('SET_NAME', data.name)
-                    commit('SET_AVATAR', data.avatar)
-                    commit('SET_INTRODUCTION', data.introduction)
-                    resolve(response)
                 }).catch(error => {
                     reject(error)
                 })

@@ -1,4 +1,4 @@
-import { getUserList, updateUserInfo, deleteUserInfo } from '@/api/user'
+import { getUserList, updateUserInfo, deleteUserInfo, modifyRoler } from '@/api/user'
 
 const state = {
     list: []
@@ -28,6 +28,7 @@ const actions = {
     updateUserInfo({ commit }, data) {
         return new Promise((resolve, reject) => {
             updateUserInfo(data).then(res => {
+                console.log(res)
                 if (res.data.code == 1) {
                     resolve(res.data.msg)
                 } else {
@@ -41,6 +42,19 @@ const actions = {
     deleteUserInfo({ commit }, data) {
         return new Promise((resolve, reject) => {
             deleteUserInfo(data).then(res => {
+                if (res.data.code == 1) {
+                    resolve(res.data.msg)
+                } else {
+                    reject(res.data.msg)
+                }
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+    modifyRoler({ commit }, data) {
+        return new Promise((resolve, reject) => {
+            modifyRoler(data).then(res => {
                 if (res.data.code == 1) {
                     resolve(res.data.msg)
                 } else {

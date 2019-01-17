@@ -89,8 +89,8 @@ export default {
       }
     }
     const Username = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('账号应该在5位以上'))
+      if (value.length < 2) {
+        callback(new Error('账号应该在2位以上'))
       } else {
         callback()
       }
@@ -104,11 +104,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '1111111'
+        username: '刘鸿超',
+        password: 'lhc74123'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur' },{required: true, trigger: 'blur', validator: Username},{required: true, trigger: 'blur', validator: Usernames}],
+        username: [{ required: true, trigger: 'blur' },{required: true, trigger: 'blur', validator: Username}],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',

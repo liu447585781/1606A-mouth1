@@ -21,22 +21,39 @@ import './mock' // simulation data
 
 import * as filters from './filters' // global filters
 
+import permission from './directive/permission/index'
+Vue.directive('permission', permission)
+
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
-  i18n: (key, value) => i18n.t(key, value)
+    size: Cookies.get('size') || 'medium', // set element-ui default size
+    i18n: (key, value) => i18n.t(key, value)
 })
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+    Vue.filter(key, filters[key])
+})
+
+//日期格式化过滤器
+Vue.filter('formatDate', function(value) {
+    let date = new Date();
+    date.setTime(value)
+    console.log(value, date)
+    let year = date.getFullYear(),
+        month = (date.getMonth() + 1).toString().padStart(2, 0),
+        day = date.getDate().toString().padStart(2, 0),
+        hour = date.getHours().toString().padStart(2, 0),
+        min = date.getMinutes().toString().padStart(2, 0),
+        sec = date.getSeconds().toString().padStart(2, 0)
+    return `${year}-${month}-${day} ${hour}:${min}:${sec}`
 })
 
 Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  i18n,
-  render: h => h(App)
+    el: '#app',
+    router,
+    store,
+    i18n,
+    render: h => h(App)
 })

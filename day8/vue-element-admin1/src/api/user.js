@@ -23,3 +23,11 @@ export function deleteUserInfo(data) {
         data
     })
 }
+
+export function modifyRoler(data) {
+    return request({
+        url: '/users/action',
+        method: 'put',
+        data
+    })
+}
