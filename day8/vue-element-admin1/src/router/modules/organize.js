@@ -18,13 +18,13 @@ const organizeRouter = {
     }, {
         path: 'review',
         component: () =>
-            import ('@/views/organize/index'),
+            import ('@/views/organize/review'),
         name: 'Review',
         meta: { title: 'Review', roles: ['review'] }
     }, {
         path: 'commit',
         component: () =>
-            import ('@/views/organize/index'),
+            import ('@/views/organize/commit'),
         name: 'Commit',
         meta: { title: 'Commit', roles: ['commit'] }
     }, {

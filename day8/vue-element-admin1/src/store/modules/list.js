@@ -28,7 +28,6 @@ const actions = {
     updateUserInfo({ commit }, data) {
         return new Promise((resolve, reject) => {
             updateUserInfo(data).then(res => {
-                console.log(res)
                 if (res.data.code == 1) {
                     resolve(res.data.msg)
                 } else {

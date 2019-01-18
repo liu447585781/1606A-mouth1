@@ -1,5 +1,6 @@
 <template>
   <div>
+    <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="document" @click="handleDownload">{{ $t('excel.export') }} Excel</el-button>
     <el-table :data="tableData" style="width: 100%">
       <el-table-column prop="id" label="ID" width="50">
       </el-table-column>
@@ -56,8 +57,9 @@
   <el-form :model="currentUser" :rules="rules" ref="form">
     <el-form-item label="头像" v-if="type=='edit'" :label-width="formLabelWidth">
           <el-upload
-            action="123"
+            action="http://123.206.55.50:11000/upload"
             class="avatar-uploader"
+            :on-success="uploadSuccess"
             :show-file-list="false">
             <img v-if="currentUser.avatar" :src="currentUser.avatar" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -156,6 +158,7 @@ import {mapState,mapActions} from 'vuex'
         type: '',
         myRolers:[],
         rolers: ['boss', 'developer', 'producter', 'operator', 'designer'],
+        downloadLoading: false
       }
     },
     computed:{
@@ -173,6 +176,17 @@ import {mapState,mapActions} from 'vuex'
         updateUserInfo:'list/updateUserInfo',
         modifyRoler:'list/modifyRoler'
       }),
+      uploadSuccess(res,file,fileList){
+        if(res.code==1){
+          this.currentUser.avatar=res.data[0].path;
+        }else{
+          this.$message({
+              message:res.msg,
+              center:true,
+              type:'success'
+            });
+        }
+      },
       handleDelete(ind,val) {
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -222,8 +236,8 @@ import {mapState,mapActions} from 'vuex'
         if(this.type=='edit'){
           this.$refs.form.validate(valid=>{
           if(valid){
-              let {id,username,profile,email,phone,address}=this.currentUser;
-              this.updateUserInfo({id,username,profile,email,phone,address}).then(res=>{
+              let {id,avatar,username,profile,email,phone,address}=this.currentUser;
+              this.updateUserInfo({id,avatar,username,profile,email,phone,address}).then(res=>{
                 this.$message({
                   message:res,
                   center:true,
@@ -261,6 +275,23 @@ import {mapState,mapActions} from 'vuex'
               })
             this.dialogFormVisible=false;
         }
+      },
+      handleDownload(){
+        this.downloadLoading=true;
+        import('@/vendor/Export2Excel').then(excel=>{
+          const tHeader=Object.keys(this.tableData[0]);
+          const data=this.tableData.map(item=>{
+            return Object.values(item)
+          })  
+          excel.export_json_to_excel({
+            header:tHeader,
+            data,
+            filname:'用户信息',
+            autoWidth:'true',
+            bookType:'xlsx'
+          })
+          this.downloadLoading=false;
+        })
       }
     }
   }

@@ -22,6 +22,9 @@ import './mock' // simulation data
 import * as filters from './filters' // global filters
 
 import permission from './directive/permission/index'
+import VCharts from 'v-charts'
+
+Vue.use(VCharts)
 Vue.directive('permission', permission)
 
 Vue.use(Element, {
@@ -38,7 +41,6 @@ Object.keys(filters).forEach(key => {
 Vue.filter('formatDate', function(value) {
     let date = new Date();
     date.setTime(value)
-    console.log(value, date)
     let year = date.getFullYear(),
         month = (date.getMonth() + 1).toString().padStart(2, 0),
         day = date.getDate().toString().padStart(2, 0),
