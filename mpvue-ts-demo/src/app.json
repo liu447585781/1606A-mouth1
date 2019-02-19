@@ -1,0 +1,22 @@
+{
+    "pages": [
+        "pages/index/main",
+        "pages/logs/main",
+        "pages/counter/main",
+        "pages/page2/main",
+        "pages/testExtend/main",
+        "pages/detail/main"
+    ],
+    "subPackages": [{
+        "root": "packageA",
+        "pages": [
+            "pages/index/main"
+        ]
+    }],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#D43D3D",
+        "navigationBarTitleText": "今日头条",
+        "navigationBarTextStyle": "white"
+    }
+}

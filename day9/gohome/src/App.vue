@@ -12,6 +12,8 @@ export default {
 </script>
 
 <style>
+@import url('./common/css/common.scss');
+
   *{
     padding: 0;
     margin: 0;

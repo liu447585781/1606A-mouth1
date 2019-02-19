@@ -1,55 +1,36 @@
 <template>
-  <div class="hello">
-    <div class="left">
+    <div class="twos">
+        <div class="left">
         <img src="../../static/imgs/left.png" alt="">
+        </div>
+        <div class="right">
+            <img src="../../static/imgs/right.png" alt="">
+        </div>
+        <div>
+            <div class="logo">
+                <img src="../../static/imgs/logo.png" alt="">
+            </div>
+            <div class="first">
+            <b>谎言从这里开始<br/><span>step 1：选择一句最适合你的<p>谎话</p></span></b>
+            </div>
+            <div class="one">
+            <b>1 每天吃饭绝不重样，饿了就点美团外卖</b>
+            </div>
+            <div class="two">
+            <b>2 下班回家亲自下厨，周一红烧牛肉，周二老坛酸菜</b>
+            </div>
+            <div class="three">
+            <b>3 知道熬夜伤身，所以我只通宵</b>
+            </div>
+            <div class="btn">
+                换一换
+            </div>
+        </div>
     </div>
-    <div class="right">
-        <img src="../../static/imgs/right.png" alt="">
-    </div>
-    <div>
-      <div class="logo">
-        <img src="../../static/imgs/logo.png" alt="">
-    </div>
-    <div class="first">
-      <b>春节回家每日一谎<br/><p>步骤</p></b>
-    </div>
-    <div class="one">
-      <b>Step 1</b>
-      <b><p>选择</p>贴心谎话</b>
-    </div>
-    <div class="two">
-      <b>Step 2</b>
-      <b><p>选择</p>谎话背景图</b>
-    </div>
-    <div class="three">
-      <b>Step 3</b>
-      <b><p>生成</p>谎话海报，领取免费春节“治”人攻略</b>
-    </div>
-    <div class="btn" @click="btn">
-      开始制作
-    </div>
-    </div>
-  </div>
 </template>
 
-<script>
-export default {
-  name: 'HelloWorld',
-  data () {
-    return {
-
-    }
-  },
-  methods:{
-    btn(){
-      this.$router.push({path:'/two'})
-    }
-  }
-}
-</script>
-
 <style scoped>
-  .hello{
+  .twos{
     position: relative;
     width: 100%;
     height: 100%;
@@ -101,14 +82,18 @@ export default {
     color: #FED59E;
     text-align: right;
   }
-  .first b p{
+  .first b span{
+      font-size: 24px;
+  }
+  .first b span p{
     display: inline-block;
     border-bottom: 4px solid #FED59E;
   }
   .one{
     position: absolute;
     left: 25px;
-    top: 152px;
+    top: 162px;
+    width: 80%;
   }
   .one b{
     display: block;
@@ -125,6 +110,7 @@ export default {
     position: absolute;
     left: 25px;
     top: 245px;
+    width: 80%;
   }
   .two b{
     display: block;
@@ -141,6 +127,7 @@ export default {
     position: absolute;
     left: 25px;
     top: 340px;
+    width: 80%;
   }
   .three b{
     display: block;
@@ -155,7 +142,7 @@ export default {
   }
   .btn{
     border: 1px solid #FFFFFF;
-    border-radius: 6px;
+    border-radius: 1px;
     color: #fff;
     width: 130px;
     height: 34px;
@@ -168,4 +155,3 @@ export default {
     font-size: 16px;
   }
 </style>
-
